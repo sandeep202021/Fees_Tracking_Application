@@ -1,0 +1,72 @@
+<div class="container-fluid mt-4">
+  <div class="row">
+    <!-- Left Section -->
+    <div class="col-lg-9">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold">Master Data Management</h3>
+        <button class="btn btn-primary">Add New</button>
+      </div>
+
+      <div class="filter-btns mb-4">
+        <button class="btn btn-dark active-filter">All</button>
+        <button class="btn btn-outline-dark" type="button" (click)="onPaymentMode('PaymentMode')">Payment Mode</button>
+        <button class="btn btn-outline-dark">Reference By</button>
+        <button class="btn btn-outline-dark">Student Status</button>
+        <button class="btn btn-outline-dark">Fee Type</button>
+      </div>
+
+     
+
+      <div class="row g-3">
+        @for(item of masterList; track $index){
+        <div class="col-sm-6 col-md-4 col-xl-3">
+          <div class="card p-3 text-center">
+            <h6>{{item.masterFor}}</h6>
+            <p class="text-muted small">{{item.masterValue}}</p>
+            <div class="d-flex justify-content-center gap-2">
+              <button class="btn btn-outline-primary btn-sm" (click)="onEdit(item)">Edit</button>
+              <button class="btn btn-outline-danger btn-sm" (click)="onDeleteCard(item.masterId)">Delete</button>
+            </div>
+          </div>
+        </div>     
+    }       
+      </div>
+    </div>
+
+    <!-- Right Section (Form) -->
+    <div class="col-lg-3 side-form">
+      <h5 class="fw-bold mb-4">Add New Master</h5>
+      <form>
+        <div class="mb-3">
+    <label class="form-label">Master For *</label>
+    <select class="form-select" [(ngModel)]="newMasterObj.masterFor" name="masterFor">
+      <option value="">---------Select----------</option>
+      <!-- <option *ngFor="let opt of masterForOptions" [value]="opt">{{ opt }}</option> -->
+     @for (opt of masterForOptions; track $index) {
+  <option [value]="opt">{{ opt }}</option>
+}
+
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Master Value *</label>
+    <input type="text" #mastervalue="ngModel" [(ngModel)]="newMasterObj.masterValue" name="masterValue" class="form-control" id="mastervalue" required >    
+  </div>
+  <div class="text-danger">
+                                @if(mastervalue.errors?.['required'] && mastervalue.touched ) {
+                                <span>Master Value is required*</span>
+                                }                                
+                </div>
+        <div class="d-grid gap-2">
+            @if(newMasterObj.masterId==0){
+          <button type="button" class="btn btn-success" (click)="onSaveMaster()">Create</button>
+          }@else{
+            <button type="button" class="btn btn-warning" (click)="onUpdateMaster()">Update</button>
+          }
+          <button class="btn btn-outline-secondary" (click)="onCancel()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

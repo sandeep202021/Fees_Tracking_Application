@@ -1,0 +1,11 @@
+.auth-panel {
+  max-width: 100%;
+  padding: 2rem;
+}
+
+/* For very small screens */
+@media (max-width: 576px) {
+  .auth-panel {
+    padding: 1.5rem;
+  }
+}
