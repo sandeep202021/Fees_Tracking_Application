@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { RouterOutlet, Router } from '@angular/router';
+import { RouterOutlet, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [ RouterOutlet],
+  imports: [ RouterOutlet,RouterLink],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })

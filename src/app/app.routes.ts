@@ -3,6 +3,7 @@ import { MasterComponent } from './pages/master/master/master.component';
 import { LoginComponent } from './pages/feetracking/login/login.component';
 import { HeaderComponent } from './pages/header/header.component';
 import { authGuard } from './shared/guard/auth.guard';
+import { PackagemasterComponent } from './pages/packagemaster/packagemaster.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -12,7 +13,8 @@ export const routes: Routes = [
         component: HeaderComponent,
         canActivate: [authGuard],
         children: [
-         {path:'master',component:MasterComponent}
+         {path:'master',component:MasterComponent},
+         {path:'packagemaster',component:PackagemasterComponent}
         ]
     }
 ];
