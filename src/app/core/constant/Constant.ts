@@ -1,4 +1,7 @@
 export const APIConstant = {
+    LOGIN:{
+        GET_LOGIN:'User/login'
+    },
     MASTER:{
         GET_ALL_MASTER:'Master/get-all-masters',
         CREATE_NEW_MASTER:'Master/create-master',
@@ -8,9 +11,9 @@ export const APIConstant = {
     },
     PACKAGE:{
         GET_ALL_PACKAGES:'PackageMaster/get-all-packages',
-        CREATE_NEW_PACKAGES:'',
-        UPDATE_PACKAGES:'',
-        DELETE_PACKAGES:'',
-        GET_ALL_FILTER_PACKAGES:''
+        CREATE_NEW_PACKAGES:'PackageMaster/create-package',
+        UPDATE_PACKAGES:'PackageMaster/update-package/',
+        DELETE_PACKAGES:'PackageMaster/delete-package/',
+        GET_ALL_FILTER_PACKAGES_BY_ID:'/PackageMaster/get-package-by-id/'
     }
 }

@@ -16,7 +16,7 @@ export class HeaderComponent {
     const localData = localStorage.getItem("loginUser");
     if (localData != null) {
       this.loggedData = JSON.parse(localData || '{}')?.data?.userName || '';
-      console.log(this.loggedData);
+      // console.log(this.loggedData);
     }
   }
 

@@ -5,37 +5,66 @@
       <div class="auth-panel">
         <h2 class="mb-4">Fee Tracking Admin</h2>
 
-        <form  #loginForm="ngForm" autocomplete="off">
+        <form #loginForm="ngForm" autocomplete="off">
           <div class="mb-3">
             <label class="form-label small text-muted">Email</label>
-            <input type="email" #email="ngModel" [(ngModel)]="loginObj.userName" name="userName" class="form-control" 
-            placeholder="Enter your email"  required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" autocomplete=off>
+            <input
+              type="email"
+              #email="ngModel"
+              [(ngModel)]="loginObj.userName"
+              name="userName"
+              class="form-control"
+              placeholder="Enter your email"
+              required
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+              autocomplete="off"
+            />
             <div class="text-danger">
-                                @if(email.errors?.['required']&& (email.touched || email.dirty)) {
-                                <span>Email is required*</span>
-                                }
-                                @if(email.errors?.['pattern']) {
-                                <span>Email Not Correct</span>
-                                }
-                            </div>
+              @if(email.errors?.['required']&& (email.touched || email.dirty)) {
+              <span>Email is required*</span>
+              } @if(email.errors?.['pattern']) {
+              <span>Email Not Correct</span>
+              }
+            </div>
           </div>
 
           <div class="mb-3">
             <label class="form-label small text-muted">Password</label>
             <div class="input-group">
-              <input type="password" #password="ngModel" [(ngModel)]="loginObj.password" name="password" class="form-control" placeholder="Enter your password" required autocomplete=off>
-              <button class="btn btn-outline-secondary" type="button" id="togglePwd">👁</button> 
-               
+              <input
+                type="password"
+                #password="ngModel"
+                [(ngModel)]="loginObj.password"
+                name="password"
+                class="form-control"
+                placeholder="Enter your password"
+                required
+                autocomplete="off"
+              />
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                id="togglePwd"
+              >
+                👁
+              </button>
             </div>
             <div class="text-danger">
-                                @if(password.errors?.['required'] && password.touched ) {
-                                <span>Password is required*</span>
-                                }                                
-                </div>
+              @if(password.errors?.['required'] && password.touched ) {
+              <span>Password is required*</span>
+              }
+            </div>
           </div>
 
           <div class="d-grid mt-4">
-            <button type="button" class="btn btn-success btn-lg" (click)="onLogin()" [disabled]="loginForm.invalid">Login</button>
+            <button
+              type="button"
+              class="btn btn-success btn-lg"
+              (click)="onLogin()"
+              [disabled]="loginForm.invalid"
+            >
+              Login
+            </button>
           </div>
         </form>
       </div>

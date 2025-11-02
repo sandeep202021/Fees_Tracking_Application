@@ -1,60 +1,257 @@
 <div class="container-fluid mt-4">
   <div class="row">
     <!-- Left Section -->
-    <div class="col-lg-9">
+    <div class="col-lg-12">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h3 class="fw-bold">Packages</h3>
-        <button class="btn btn-primary">Add</button>
-      </div>
-
-      <div class="filter-btns mb-4">
-        <button class="btn btn-dark active-filter">All</button>
-        <button class="btn btn-outline-dark" type="button">Payment Mode</button>
-        <button class="btn btn-outline-dark">Reference By</button>
-        <button class="btn btn-outline-dark">Student Status</button>
-        <button class="btn btn-outline-dark">Fee Type</button>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="32"
+            width="28"
+            viewBox="0 0 448 512"
+          >
+            <!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+            <path
+              fill="#000000"
+              d="M256 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 160-160 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l160 0 0 160c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160 160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-160 0 0-160z"
+            />
+          </svg>
+        </button>
       </div>
 
       <div class="row g-3">
+        @for(item of PackagesMasterList; track $index){
         <div class="col-sm-6 col-md-4 col-xl-3">
           <div class="card p-3 text-center">
-            <h6></h6>
-            <p class="text-muted small"></p>
+            <h6>{{ item.packageName }}</h6>
+            <p class="text-muted small">{{ item.oneTimeTotalCost }}</p>
             <div class="d-flex justify-content-center gap-2">
-              <button class="btn btn-outline-primary btn-sm">Edit</button>
-              <button class="btn btn-outline-danger btn-sm">Delete</button>
+              <button
+                class="btn btn-outline-primary btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                (click)="onEdit(item)"
+              >
+                Edit
+              </button>
+              <button class="btn btn-outline-danger btn-sm" (click)="onDeletePackage(item.packageId)">Delete</button>
             </div>
           </div>
         </div>
+        }
       </div>
     </div>
+  </div>
+</div>
 
-    <!-- Right Section (Form) -->
-    <div class="col-lg-3 side-form">
-      <h5 class="fw-bold mb-4">Add New Master</h5>
-      <form>
-        <div class="mb-3">
-          <label class="form-label">Master For *</label>
-          <select class="form-select">
-            <option value="">---------Select----------</option>
-          </select>
-        </div>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  #packageModal
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Package</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="onCancel()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          class="p-4 border rounded shadow-sm bg-light"
+          [formGroup]="newPackagemasterForm"
+        >
+          <div class="row g-3">
+            <!-- Package Name Dropdown -->
+            <div class="col-md-6">
+              <label for="packageName" class="form-label">Package Name</label>
+              <select
+                class="form-select"
+                id="packageName"
+                formControlName="packageName"
+                name="packageName"
+              >
+                <option value="">-- Select Package --</option>
+                @for (opt of packagemasterForOptions; track $index) {
+                <option [value]="opt">{{ opt }}</option>
+                }
+              </select>
+              <div class="text-danger">
+                @if(newPackagemasterForm.controls['packageName'].touched) { @if
+                (newPackagemasterForm.controls['packageName'].errors?.['required'])
+                {
+                <span>This is Required</span>
+                } @if
+                (newPackagemasterForm.controls['packageName'].errors?.['minlength'])
+                {
+                <span>Min % char Neede</span>
+                } }
+              </div>
+            </div>
 
-        <div class="mb-3">
-          <label class="form-label">Master Value *</label>
-          <input
-            type="text"
-            name="masterValue"
-            class="form-control"
-            id="mastervalue"
-            required
-          />
-        </div>
-        <div class="d-grid gap-2">
-          <button type="button" class="btn btn-success">Create</button>
-          <button class="btn btn-outline-secondary" > Cancel</button>
-        </div>
-      </form>
+            <!-- One Time Total Cost -->
+            <div class="col-md-6">
+              <label for="oneTimeTotalCost" class="form-label"
+                >One Time Total Cost</label
+              >
+              <input
+                type="number"
+                min="0"
+                class="form-control"
+                formControlName="oneTimeTotalCost"
+                id="oneTimeTotalCost"
+                name="oneTimeTotalCost"
+                placeholder="Enter cost"
+                required
+              />
+              <div class="text-danger">
+                @if (newPackagemasterForm.controls['oneTimeTotalCost'].touched)
+                { @if
+                (newPackagemasterForm.controls['oneTimeTotalCost'].errors?.['required'])
+                {
+                <span>This field is required</span>
+                } @if
+                (newPackagemasterForm.controls['oneTimeTotalCost'].errors?.['min'])
+                {
+                <span>Value must be greater than 0</span>
+                } }
+              </div>
+            </div>
+
+            <!-- EMI Total Cost -->
+            <div class="col-md-6">
+              <label for="emiTotalCost" class="form-label"
+                >EMI Total Cost</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                formControlName="emiTotalCost"
+                id="emiTotalCost"
+                name="emiTotalCost"
+                placeholder="Enter EMI cost"
+                required
+              />
+              <div class="text-danger">
+                @if (newPackagemasterForm.controls['emiTotalCost'].touched) { @if
+                (newPackagemasterForm.controls['emiTotalCost'].errors?.['required']) {
+                <span>This field is required</span>
+                } @if (newPackagemasterForm.controls['emiTotalCost'].errors?.['min']) {
+                <span>Value must be greater than 0</span>
+                } }
+              </div>
+            </div>
+
+            <!-- Max Branches -->
+            <div class="col-md-6">
+              <label for="maxBranches" class="form-label">Max Branches</label>
+              <input
+                type="number"
+                min="0"
+                class="form-control"
+                formControlName="maxBranches"
+                id="maxBranches"
+                name="maxBranches"
+                placeholder="Enter number of branches"
+                required
+              />
+              <div class="text-danger">
+                @if (newPackagemasterForm.controls['maxBranches'].touched) { @if
+                (newPackagemasterForm.controls['maxBranches'].errors?.['required']) {
+                <span>This field is required</span>
+                } @if (newPackagemasterForm.controls['maxBranches'].errors?.['min']) {
+                <span>Value must be greater than 0</span>
+                } }
+              </div>
+            </div>
+
+            <!-- Max Students -->
+            <div class="col-md-6">
+              <label for="maxStudents" class="form-label">Max Students</label>
+              <input
+                type="number"
+                min="0"
+                class="form-control"
+                formControlName="maxStudents"
+                id="maxStudents"
+                name="maxStudents"
+                placeholder="Enter number of students"
+                required
+              />
+              <div class="text-danger">
+                @if (newPackagemasterForm.controls['maxStudents'].touched) { @if
+                (newPackagemasterForm.controls['maxStudents'].errors?.['required']) {
+                <span>This field is required</span>
+                } @if (newPackagemasterForm.controls['maxStudents'].errors?.['min']) {
+                <span>Value must be greater than 0</span>
+                } }
+              </div>
+            </div>
+
+            <!-- SMS Alert Toggle -->
+            <div class="col-md-6 d-flex align-items-center">
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  formControlName="isSmsAlert"
+                  type="checkbox"
+                  id="isSmsAlert"
+                  name="isSmsAlert"
+                  checked
+                />
+                <label class="form-check-label" for="isSmsAlert"
+                  >SMS Alert</label
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="mt-4 text-end">
+            @if(newPackagemasterForm.value.packageId==0){
+            <button
+              type="submit"
+              class="btn btn-success"
+              [disabled]="newPackagemasterForm.invalid"
+              (click)="onSavePackage()"
+            >
+              Save
+            </button>
+          }@else{
+            <button
+              type="submit"
+              class="btn btn-warning"
+              [disabled]="newPackagemasterForm.invalid"
+              (click)="onUpdatePackage()"
+            >
+              Update
+            </button>
+          }            
+            <button
+              type="button"
+              class="btn btn-danger ms-2"
+              (click)="onCancel()"
+            >
+              Reset
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
