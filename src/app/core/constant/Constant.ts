@@ -15,5 +15,12 @@ export const APIConstant = {
         UPDATE_PACKAGES:'PackageMaster/update-package/',
         DELETE_PACKAGES:'PackageMaster/delete-package/',
         GET_ALL_FILTER_PACKAGES_BY_ID:'/PackageMaster/get-package-by-id/'
+    },
+    INSTITUTE:{
+        GET_ALL_INSTITUTE:'InstituteMaster/get-all-institutes',
+        CREATE_NEW_INSTITUTE:'InstituteMaster/create-institute',
+        UPDATE_INSTITUTE:'InstituteMaster/update-institute/',
+        DELETE_INSTITUE:'InstituteMaster/delete-institute/',
+        GET_ALL_FILTER_INSTITUTE_BY_ID:'InstituteMaster/get-institute-by-id/'
     }
 }
