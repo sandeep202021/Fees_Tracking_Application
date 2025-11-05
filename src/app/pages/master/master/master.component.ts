@@ -17,7 +17,7 @@ export class MasterComponent implements OnInit {
    @ViewChild('masterModal') masterModal!: ElementRef;
 
   newMasterObj: MasterModel = new MasterModel();
-  masterForOptions: string[] = ['PaymentMode', 'RefrenceBy', 'Student Status', 'Fee Type'];
+  masterForOptions: string[] = ['PaymentMode', 'RefrenceBy'];
 
   masterServ = inject(MasterServiceService)
   toastr = inject(ToastrService);

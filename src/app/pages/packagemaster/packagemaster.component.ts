@@ -1,10 +1,10 @@
-import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { PackageModel } from '../../core/model/classes/package';
 
 import { IApiModel } from '../../core/model/interfaces/APIResponse';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable,Subscription } from 'rxjs';
 import { PackagemasterService } from '../../core/services/packagemaster/packagemaster.service';
 import * as bootstrap from 'bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -16,7 +16,7 @@ import { YesNoPipe } from '../../shared/pipes/yes-no.pipe';
   templateUrl: './packagemaster.component.html',
   styleUrl: './packagemaster.component.css'
 })
-export class PackagemasterComponent implements OnInit {
+export class PackagemasterComponent implements OnInit, OnDestroy {
   @ViewChild('packageModal') packageModal!: ElementRef;
   
 
@@ -25,13 +25,14 @@ export class PackagemasterComponent implements OnInit {
   }
 
   newPackageMasterObj: PackageModel = new PackageModel();
-  packagemasterForOptions: string[] = ['Platinum', 'Diamond', 'Gold', 'Silver','Basic'];
+  packagemasterForOptions: string[] = ['Combo', 'Expert', 'Advance ', 'Intermediate','Basic'];
   
     packagesServ = inject(PackagemasterService);
     toastr = inject(ToastrService);
     
   
     PackagesMasterList: PackageModel[] = [];
+    subscriptionList: Subscription[] = [];
     
     newPackagemasterForm:FormGroup= new FormGroup({
           packageId: new FormControl(0),
@@ -45,7 +46,7 @@ export class PackagemasterComponent implements OnInit {
     
 
     loadPackages() {
-  this.packagesServ.getAllPackages().subscribe({
+  const allPackages$ =  this.packagesServ.getAllPackages().subscribe({
     next: (result: IApiModel) => {
       this.PackagesMasterList = result.data;        
     },
@@ -54,6 +55,7 @@ export class PackagemasterComponent implements OnInit {
       // Handle error appropriately
     }
   })
+  this.subscriptionList.push(allPackages$);
 }
 
     onSavePackage(){
@@ -141,7 +143,7 @@ export class PackagemasterComponent implements OnInit {
     this.manualModalCleanup();
   }
 }
-private manualModalCleanup() {
+     private manualModalCleanup() {
   const modalElement = this.packageModal.nativeElement;
   
   // Hide the modal
@@ -159,6 +161,13 @@ private manualModalCleanup() {
   
   // Force reflow to ensure cleanup
   void modalElement.offsetHeight;
+}
+
+ngOnDestroy(): void {
+    debugger;
+    this.subscriptionList.forEach(sub => {
+      sub.unsubscribe()
+    })
 }
 
 }
