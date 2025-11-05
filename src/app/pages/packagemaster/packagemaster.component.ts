@@ -8,10 +8,11 @@ import { Observable } from 'rxjs';
 import { PackagemasterService } from '../../core/services/packagemaster/packagemaster.service';
 import * as bootstrap from 'bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { YesNoPipe } from '../../shared/pipes/yes-no.pipe';
 
 @Component({
   selector: 'app-packagemaster',
-  imports: [FormsModule, CommonModule,ReactiveFormsModule],
+  imports: [FormsModule, CommonModule,ReactiveFormsModule,YesNoPipe],
   templateUrl: './packagemaster.component.html',
   styleUrl: './packagemaster.component.css'
 })
@@ -100,7 +101,7 @@ export class PackagemasterComponent implements OnInit {
         },
         error:(error:IApiModel)=>{
           //alert(err.message);
-          this.toastr.error(error.message, 'Can not delete!');  
+          this.toastr.error(error.message);  
         }
       })
     }
@@ -124,15 +125,7 @@ export class PackagemasterComponent implements OnInit {
 
     onCancel() {
       debugger
-       this.newPackagemasterForm.reset({
-        packageId: 0,
-        packageName: '',
-        oneTimeTotalCost: 0,
-        emiTotalCost: 0,
-        maxBranches: 0,
-        maxStudents: 0,
-        isSmsAlert: false
-        });       
+       this.newPackagemasterForm.reset();       
         //this.newPackageMasterObj = new PackageModel();
       }
 
@@ -167,4 +160,5 @@ private manualModalCleanup() {
   // Force reflow to ensure cleanup
   void modalElement.offsetHeight;
 }
+
 }

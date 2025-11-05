@@ -21,8 +21,7 @@
               fill="#000000"
               d="M256 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 160-160 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l160 0 0 160c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160 160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-160 0 0-160z"
             />
-          </svg>
-          <i class="bi bi-plus"></i>
+          </svg>          
         </button>
       </div>
 
@@ -53,25 +52,7 @@
           (click)="onPaymentMode('Reference By')"
         >
           Reference By
-        </button>
-        <button
-          class="btn"
-          [class.btn-dark]="currentFilter === 'Student Status'"
-          [class.btn-outline-dark]="currentFilter !== 'Student Status'"
-          type="button"
-          (click)="onPaymentMode('Student Status')"
-        >
-          Student Status
-        </button>
-        <button
-          class="btn"
-          [class.btn-dark]="currentFilter === 'Fee Type'"
-          [class.btn-outline-dark]="currentFilter !== 'Fee Type'"
-          type="button"
-          (click)="onPaymentMode('Fee Type')"
-        >
-          Fee Type
-        </button>
+        </button>        
       </div>
 
       <div class="row g-3">

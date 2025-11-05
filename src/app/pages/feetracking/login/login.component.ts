@@ -27,7 +27,7 @@ export class LoginComponent {
         this.toastr.success('Welcome!', 'LogIn Successful!');
        localStorage.setItem('loginUser',JSON.stringify(res));
         // localStorage.setItem('token', res.token)      
-        this.router.navigateByUrl("master");
+        this.router.navigateByUrl("dashboard");
       },
       error: (error: any) => {
         this.toastr.clear(); // Clear loading toast

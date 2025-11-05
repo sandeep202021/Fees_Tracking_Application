@@ -24,3 +24,10 @@ export const APIConstant = {
         GET_ALL_FILTER_INSTITUTE_BY_ID:'InstituteMaster/get-institute-by-id/'
     }
 }
+
+export const ToastMessages = {
+  SAVE_SUCCESS: { message: 'Data saved successfully', title: 'Save' },
+  UPDATE_SUCCESS: { message: 'Data updated successfully', title: 'Update' },
+  DELETE_SUCCESS: { message: 'Data deleted successfully', title: 'Delete' },
+  ERROR: { message: 'Something went wrong, please try again.', title: 'Error' },
+};

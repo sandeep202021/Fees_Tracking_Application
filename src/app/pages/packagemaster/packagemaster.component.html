@@ -25,27 +25,60 @@
         </button>
       </div>
 
-      <div class="row g-3">
-        @for(item of PackagesMasterList; track $index){
-        <div class="col-sm-6 col-md-4 col-xl-3">
-          <div class="card p-3 text-center">
-            <h6>{{ item.packageName }}</h6>
-            <p class="text-muted small">{{ item.oneTimeTotalCost }}</p>
-            <div class="d-flex justify-content-center gap-2">
-              <button
-                class="btn btn-outline-primary btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-                (click)="onEdit(item)"
-              >
-                Edit
-              </button>
-              <button class="btn btn-outline-danger btn-sm" (click)="onDeletePackage(item.packageId)">Delete</button>
-            </div>
-          </div>
+      <!--table start -->
+      <div class="container-fluid mt-4">
+        <div class="table-responsive">
+          <table
+            class="table table-bordered table-striped align-middle text-center"
+          >
+            <thead class="table-dark">
+              <tr>
+                <th>Package ID</th>
+                <th>Package Name</th>
+                <th>One Time Cost</th>
+                <th>EMI Total Cost</th>
+                <th>Max Branches</th>
+                <th>Max Students</th>
+                <th>SMS Alert</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for(item of PackagesMasterList; track $index){
+              <tr>
+                <td>{{ item.packageId }}</td>
+                <td>{{ item.packageName }}</td>
+                <td>{{ item.oneTimeTotalCost }}</td>
+                <td>{{ item.emiTotalCost }}</td>
+                <td>{{ item.maxBranches }}</td>
+                <td>{{ item.maxStudents }}</td>
+                <td>
+                  <span class="badge bg-success">{{ item.isSmsAlert | yesNo}}</span>
+                </td>
+                <td  class="text-nowrap align-middle">
+                  <button
+                    class="btn btn-outline-primary btn-sm me-1"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    (click)="onEdit(item)"
+                  >
+                    <i class="bi bi-pencil-square"></i> Edit
+                  </button>
+                  <button
+                    class="btn btn-outline-danger btn-sm"
+                    (click)="onDeletePackage(item.packageId)"
+                  >
+                    <i class="bi bi-trash"></i> Delete
+                  </button>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
         </div>
-        }
       </div>
+
+      <!--table end-->      
     </div>
   </div>
 </div>
@@ -148,10 +181,14 @@
                 required
               />
               <div class="text-danger">
-                @if (newPackagemasterForm.controls['emiTotalCost'].touched) { @if
-                (newPackagemasterForm.controls['emiTotalCost'].errors?.['required']) {
+                @if (newPackagemasterForm.controls['emiTotalCost'].touched) {
+                @if
+                (newPackagemasterForm.controls['emiTotalCost'].errors?.['required'])
+                {
                 <span>This field is required</span>
-                } @if (newPackagemasterForm.controls['emiTotalCost'].errors?.['min']) {
+                } @if
+                (newPackagemasterForm.controls['emiTotalCost'].errors?.['min'])
+                {
                 <span>Value must be greater than 0</span>
                 } }
               </div>
@@ -172,9 +209,11 @@
               />
               <div class="text-danger">
                 @if (newPackagemasterForm.controls['maxBranches'].touched) { @if
-                (newPackagemasterForm.controls['maxBranches'].errors?.['required']) {
+                (newPackagemasterForm.controls['maxBranches'].errors?.['required'])
+                {
                 <span>This field is required</span>
-                } @if (newPackagemasterForm.controls['maxBranches'].errors?.['min']) {
+                } @if
+                (newPackagemasterForm.controls['maxBranches'].errors?.['min']) {
                 <span>Value must be greater than 0</span>
                 } }
               </div>
@@ -195,9 +234,11 @@
               />
               <div class="text-danger">
                 @if (newPackagemasterForm.controls['maxStudents'].touched) { @if
-                (newPackagemasterForm.controls['maxStudents'].errors?.['required']) {
+                (newPackagemasterForm.controls['maxStudents'].errors?.['required'])
+                {
                 <span>This field is required</span>
-                } @if (newPackagemasterForm.controls['maxStudents'].errors?.['min']) {
+                } @if
+                (newPackagemasterForm.controls['maxStudents'].errors?.['min']) {
                 <span>Value must be greater than 0</span>
                 } }
               </div>
@@ -232,7 +273,7 @@
             >
               Save
             </button>
-          }@else{
+            }@else{
             <button
               type="submit"
               class="btn btn-warning"
@@ -241,7 +282,7 @@
             >
               Update
             </button>
-          }            
+            }
             <button
               type="button"
               class="btn btn-danger ms-2"

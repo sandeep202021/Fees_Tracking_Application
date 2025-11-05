@@ -47,7 +47,8 @@ export class MasterComponent implements OnInit {
         //alert("save successful");
         this.toastr.success("Save Data Successful",'save')
         this.loadMaster();
-        this.onCancel()
+        this.onCancel();
+        this.closeModal();
       },
       error: (error: IApiModel) => {
          this.toastr.error(error.message, 'Can not delete!');        
