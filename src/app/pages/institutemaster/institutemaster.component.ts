@@ -11,10 +11,11 @@ import {
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../core/services/message/toast.service';
 import { ToastMessages } from '../../core/constant/Constant'; 
-
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-institutemaster',
+  standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './institutemaster.component.html',
   styleUrl: './institutemaster.component.css',
@@ -23,6 +24,7 @@ export class InstitutemasterComponent implements OnInit {
 
   InstituremasterServ = inject(InstitutemasterService);
   toast = inject(ToastService);
+  router=inject(Router)
 
 
   ngOnInit(): void {
@@ -51,34 +53,18 @@ export class InstitutemasterComponent implements OnInit {
     console.log('institure master ');
     this.InstituremasterServ.getAllInstituteMaster().subscribe({
       next: (result: IApiModel) => {
-        this.instituteMasterList = result.data;
-        console.log(this.instituteMasterList);
-        debugger;
+        this.instituteMasterList = result.data;        
       },
       error: (error: IApiModel) => {
         console.error('Error loading packages:', error);        
       },
     });
   }
- 
 
-  savaeInstitute() {
-    debugger;
-    this.newInstituteMasterObj = this.newInstituMasterForm.value;
-    this.InstituremasterServ.createNewInstituteMaster(
-      this.newInstituteMasterObj
-    ).subscribe({
-      next: (result: IApiModel) => {
-       this.toast.showSuccess(ToastMessages.SAVE_SUCCESS);
-        this.loadInstitute();
-        this.onCancel();
-      },
-      error: (error: IApiModel) => {
-        console.error(error.message);
-        this.toast.showError(ToastMessages.ERROR);
-      },
-    });
+  OpenInstitureForm(){    
+    this.router.navigate(['instituteForm']);
   }
+  
 
   onEdit(data: instituteModel) {
     this.newInstituteMasterObj = data;
@@ -100,14 +86,10 @@ export class InstitutemasterComponent implements OnInit {
   UpdateInstitute() {
     debugger;
     const updateformsdata = this.newInstituMasterForm.value;
-    this.InstituremasterServ.updateNewInstituteMaster(
-      updateformsdata.instituteId,
-      updateformsdata
-    ).subscribe({
+    this.InstituremasterServ.updateNewInstituteMaster(updateformsdata.instituteId, updateformsdata).subscribe({
       next: (result: IApiModel) => {
         this.toast.showSuccess(ToastMessages.UPDATE_SUCCESS);
         this.loadInstitute();
-        this.onCancel();
       },
       error: (error: IApiModel) => {
         this.toast.showError(ToastMessages.ERROR);
@@ -115,8 +97,7 @@ export class InstitutemasterComponent implements OnInit {
     });
   }
 
-  onDeleteInstitute(id: number) {
-    debugger;
+  onDeleteInstitute(id: number) {   
     const isDelete = confirm('Are you sure want to Delete');
     if (isDelete) {
       this.InstituremasterServ.deleteInstituteMaster(id).subscribe({
@@ -131,8 +112,8 @@ export class InstitutemasterComponent implements OnInit {
     }
   }
 
-  onCancel() {
-    debugger;
-    this.newInstituMasterForm.reset();
+  filterInstitute(){
+    debugger
   }
+  
 }

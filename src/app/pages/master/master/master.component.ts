@@ -64,7 +64,7 @@ export class MasterComponent implements OnInit {
     this.masterServ.updateMaster(this.newMasterObj.masterId, this.newMasterObj).subscribe({
       next: (result: IApiModel) => {
        // alert("successfully updated record");
-       this.toastr.success("Update Data Successful",'Upsate')
+       this.toastr.success("Update Data Successful",'Update')
         this.loadMaster();
         this.onCancel() ;
         this.closeModal();

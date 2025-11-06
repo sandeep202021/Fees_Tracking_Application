@@ -1,137 +1,17 @@
-<div class="container-fluid mt-4">
-  <div class="row">
-    <!-- Left Section -->
-    <div class="col-lg-12">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3 class="fw-bold">Institute</h3>
-        <button
-          type="button"
-          class="btn btn-outline-success"
-          (click)="OpenInstitureForm()"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="32"
-            width="28"
-            viewBox="0 0 448 512"
-          >
-            <!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-            <path
-              fill="#000000"
-              d="M256 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 160-160 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l160 0 0 160c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160 160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-160 0 0-160z"
-            />
-          </svg>
-        </button>
-      </div>
+<!--back button-->
+<button type="button" class="btn btn-success"  (click)="backToInstitute()">
+  <i class="bi bi-arrow-left-circle"></i> Back
+</button>
 
-      <!-- search bar-->
-      <div class="container">
-        <div class="input-group mb-3 w-50 mx-auto">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Search here..."
-            aria-label="Search"
-          />
-          <button class="btn btn-success" type="button" (click)="filterInstitute()">
-            <i class="bi bi-search"></i> Search
-          </button>
-        </div>
-      </div>
-
-      <!--TABLE START-->
-      <div class="container-fluid ">
-        <div class="table-responsive">
-          <table
-            class="table table-bordered table-striped table-hover align-middle"
-          >
-            <thead class="table-dark">
-              <tr>
-                <th scope="col">Institute ID</th>
-                <th scope="col">Institute Name</th>
-                <th scope="col">Contact No</th>
-                <th scope="col">Email</th>
-                <th scope="col">City</th>
-                <th scope="col">Pincode</th>
-                <th scope="col">State</th>
-                <th scope="col">Location</th>
-                <th scope="col">Owner Name</th>
-                <th scope="col">GST No</th>
-                <th scope="col">Created Date</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for(item of instituteMasterList; track $index){
-              <tr>
-                <td>{{ item.instituteId }}</td>
-                <td>{{ item.name }}</td>
-                <td>{{ item.conatctNo }}</td>
-                <td>{{ item.emailId }}</td>
-                <td>{{ item.city }}</td>
-                <td>{{ item.pincode }}</td>
-                <td>{{ item.state }}</td>
-                <td>{{ item.location }}</td>
-                <td>{{ item.ownerName }}</td>
-                <td>{{ item.gstNo }}</td>
-                <td>{{ item.createdDate }}</td>
-                <td
-                  class="text-nowrap align-middle text-center"
-                  style="width: 160px"
-                >
-                  <button
-                    class="btn btn-outline-primary btn-sm me-1"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                    (click)="onEdit(item)"
-                  >
-                    <i class="bi bi-pencil-square"></i>
-                  </button>
-                  <button
-                    class="btn btn-outline-danger btn-sm"
-                    (click)="onDeleteInstitute(item.instituteId)"
-                  >
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </td>
-              </tr>
-              }
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <!--TABLE END-->
-    </div>
-  </div>
-</div>
-
-<!-- Modal -->
-<div
-  class="modal fade"
-  id="exampleModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
-  #packageModal
->
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">
-          Add New Institute
-        </h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
+<div class="container-fluid py-3">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card shadow-sm p-4">
+        <h4 class="text-center mb-4">Institute Form</h4>
         <form
           class="p-4 border rounded shadow-sm bg-light"
           [formGroup]="newInstituMasterForm"
-          autocomplete="off"
+          (ngSubmit)="savaeInstitute()"
         >
           <div class="row g-3">
             <!-- Institute Name -->
@@ -151,8 +31,6 @@
                 @if (newInstituMasterForm.controls['name'].touched) { @if
                 (newInstituMasterForm.controls['name'].errors?.['required']) {
                 <span>This field is required</span>
-                } @if (newInstituMasterForm.controls['name'].errors?.['min']) {
-                <span>Value must be greater than 0</span>
                 } }
               </div>
             </div>
@@ -167,9 +45,32 @@
                 formControlName="conatctNo"
                 name="conatctNo"
                 placeholder="Enter contact number"
+                pattern="^\d+$"
+                required
+                minlength="10"
+                maxlength="10"
                 autocomplete="off"
                 required
               />
+              <div class="text-danger">
+                @if(newInstituMasterForm.controls['conatctNo'].touched) { @if
+                (newInstituMasterForm.controls['conatctNo'].errors?.['required'])
+                {
+                <span>This is Mandatory</span>
+                } @else if
+                (newInstituMasterForm.controls['conatctNo'].errors?.['minlength'])
+                {
+                <span>Min 10 Char Needed</span>
+                } @else if
+                (newInstituMasterForm.controls['conatctNo'].errors?.['maxlength'])
+                {
+                <span>Max 10 Char Needed</span>
+                } @else if
+                (newInstituMasterForm.controls['conatctNo'].errors?.['pattern'])
+                {
+                <span>Only No Allowed</span>
+                } }
+              </div>
             </div>
 
             <!-- Email ID -->
@@ -183,8 +84,20 @@
                 name="emailId"
                 placeholder="Enter email address"
                 autocomplete="off"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                 required
               />
+              <div class="text-danger">
+                @if(newInstituMasterForm.controls['emailId'].errors?.['required']&&
+                (newInstituMasterForm.controls['emailId'].touched ||
+                newInstituMasterForm.controls['emailId'].dirty)) {
+                <span>This is required</span>
+                }
+                @if(newInstituMasterForm.controls['emailId'].errors?.['pattern'])
+                {
+                <span>Email NoT Correct</span>
+                }
+              </div>
             </div>
 
             <!-- City -->
@@ -199,6 +112,12 @@
                 placeholder="Enter city"
                 autocomplete="off"
               />
+              <div class="text-danger">
+                @if (newInstituMasterForm.controls['city'].touched) { @if
+                (newInstituMasterForm.controls['city'].errors?.['required']) {
+                <span>This field is required</span>
+                } }
+              </div>
             </div>
 
             <!-- Pincode -->
@@ -213,6 +132,13 @@
                 placeholder="Enter pincode"
                 autocomplete="off"
               />
+              <div class="text-danger">
+                @if (newInstituMasterForm.controls['pincode'].touched) { @if
+                (newInstituMasterForm.controls['pincode'].errors?.['required'])
+                {
+                <span>This field is required</span>
+                } }
+              </div>
             </div>
 
             <!-- State -->
@@ -227,6 +153,12 @@
                 placeholder="Enter state"
                 autocomplete="off"
               />
+              <div class="text-danger">
+                @if (newInstituMasterForm.controls['state'].touched) { @if
+                (newInstituMasterForm.controls['state'].errors?.['required']) {
+                <span>This field is required</span>
+                } }
+              </div>
             </div>
 
             <!-- Location -->
@@ -241,6 +173,13 @@
                 placeholder="Enter location or address"
                 autocomplete="off"
               ></textarea>
+              <div class="text-danger">
+                @if (newInstituMasterForm.controls['location'].touched) { @if
+                (newInstituMasterForm.controls['location'].errors?.['required'])
+                {
+                <span>This field is required</span>
+                } }
+              </div>
             </div>
 
             <!-- Owner Name -->
@@ -255,6 +194,13 @@
                 placeholder="Enter owner name"
                 autocomplete="off"
               />
+              <div class="text-danger">
+                @if (newInstituMasterForm.controls['ownerName'].touched) { @if
+                (newInstituMasterForm.controls['ownerName'].errors?.['required'])
+                {
+                <span>This field is required</span>
+                } }
+              </div>
             </div>
 
             <!-- GST No -->
@@ -269,6 +215,12 @@
                 placeholder="Enter GST number"
                 autocomplete="off"
               />
+              <div class="text-danger">
+                @if (newInstituMasterForm.controls['gstNo'].touched) { @if
+                (newInstituMasterForm.controls['gstNo'].errors?.['required']) {
+                <span>This field is required</span>
+                } }
+              </div>
             </div>
           </div>
 
@@ -276,20 +228,18 @@
           <div class="mt-4 text-end">
             <button
               type="submit"
-              class="btn btn-warning"
-              (click)="UpdateInstitute()"
+              class="btn btn-success"
+              (click)="savaeInstitute()"
               [disabled]="newInstituMasterForm.invalid"
             >
-              Update
+              Save
             </button>
-
             <button
-              type="reset"
+              type="button"
               class="btn btn-danger ms-2"
-              data-bs-dismiss="modal"
-              aria-label="Close"
+              (click)="onCancel()"
             >
-              Cancel
+              Reset
             </button>
           </div>
         </form>
