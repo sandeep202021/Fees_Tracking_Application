@@ -8,6 +8,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { InstitutemasterComponent } from './pages/institutemaster/institutemaster.component';
 import { ErrorpageComponent } from './pages/errorpage/errorpage.component';
 import { InstituteformComponent } from './pages/institutemaster/instituteform/instituteform.component';
+import { BranchmasterComponent } from './pages/branchmaster/branchmaster.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -22,6 +23,7 @@ export const routes: Routes = [
          {path:'packagemaster',component:PackagemasterComponent},
          {path:'institute',component:InstitutemasterComponent},
          {path:'instituteForm',component:InstituteformComponent},
+         {path:'branch',component:BranchmasterComponent},
          {path:'**',component:ErrorpageComponent}
          
         ]

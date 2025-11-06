@@ -1,0 +1,190 @@
+<div class="container-fluid mt-4">
+  <div class="row g-3 align-items-start">
+    <!-- TABLE COLUMN (default full width when form hidden) -->
+    <div #tableCol class="col-12">
+      <div class="card card-shaded p-3">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h5 class="mb-0">Branches</h5>
+
+          <!-- + button to open form -->
+          <div>
+            <button
+              id="openFormBtn"
+              type="button"
+              class="btn btn-sm btn-success"
+              (click)="openForm()"
+            >
+              <i class="bi-plus-lg"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Example table -->
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered align-middle">
+            <thead class="table-dark">
+              <tr>
+                <th>Branch ID</th>
+                <th>Branch Name</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Contact</th>
+                <th>Email</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="branchTableBody">
+              <!-- sample rows -->
+             @for (item of branchMasterList; track $index) {
+              <tr>
+                <td>{{item.branchId}}</td>
+                <td>{{item.branchName }}</td>
+                <td>{{item.city}}</td>
+                <td>{{item.state}} </td>
+                <td>{{item.branchContactNo}}</td>
+                <td>{{item.branchEmail}}</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-secondary me-1">
+                    <i class="bi bi-pencil-square"></i>
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                </td>
+              </tr>}
+              <!-- more rows can go here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM COLUMN (hidden by default) -->
+    <div #formCol class="col-4 col-md-4 d-none">
+      <div class="card card-shaded p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0">Add Branch</h5>
+          <!-- cross button -->
+          <button
+            type="button"
+            class="btn btn-danger btn-sm"
+            id="closeFormBtn"
+            title="Close form"
+            (click)="closeForm()"
+          >
+            &times;
+          </button>
+        </div>
+
+        <form id="branchForm">
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label">Branch Name</label>
+              <input
+                id="branchName"
+                type="text"
+                class="form-control"
+                placeholder="KIET"
+                required
+              />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Branch Code</label>
+              <input
+                id="branchCode"
+                type="text"
+                class="form-control"
+                placeholder="K8899T"
+              />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Branch Contact No</label>
+              <input
+                id="branchContactNo"
+                type="tel"
+                class="form-control"
+                placeholder="9988990077"
+              />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Branch Email</label>
+              <input
+                id="branchEmail"
+                type="email"
+                class="form-control"
+                placeholder="contact@kiet.in"
+              />
+            </div>
+
+            <!-- City Dropdown -->
+            <div class="col-md-6">
+              <label class="form-label">City</label>
+              <select id="city" class="form-select" required>
+                <option value="" selected disabled>Select City</option>
+                <option>Ghaziabad</option>
+                <option>Noida</option>
+                <option>Lucknow</option>
+                <option>Kanpur</option>
+              </select>
+            </div>
+
+            <!-- State Dropdown -->
+            <div class="col-md-6">
+              <label class="form-label">State</label>
+              <select id="state" class="form-select" required>
+                <option value="" selected disabled>Select State</option>
+                <option>Uttar Pradesh</option>
+                <option>Delhi</option>
+                <option>Bihar</option>
+                <option>Haryana</option>
+              </select>
+            </div>
+
+            <!-- Institute ID Dropdown -->
+            <div class="col-md-6">
+              <label class="form-label">Institute</label>
+              <select id="instituteId" class="form-select" required>
+                <option value="" selected disabled>Select Institute</option>
+                 @for (item of instituteMasterList; track $index) {
+                <option [value]="item.instituteId">{{item.name}}</option>
+                }               
+               </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Pincode</label>
+              <input
+                id="pincode"
+                type="text"
+                class="form-control"
+                placeholder="8966"
+              />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Location</label>
+              <input
+                id="location"
+                type="text"
+                class="form-control"
+                placeholder="West up"
+              />
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end mt-3">
+            <button type="submit" class="btn btn-success me-2">Save</button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              id="cancelBtn"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -22,6 +22,12 @@ export const APIConstant = {
         UPDATE_INSTITUTE:'InstituteMaster/update-institute/',
         DELETE_INSTITUE:'InstituteMaster/delete-institute/',
         GET_ALL_FILTER_INSTITUTE_BY_ID:'InstituteMaster/get-institute-by-id/'
+    },
+    BRANCH:{
+        GET_ALL_BRANCHES:'BranchMaster/get-all-branches',
+        CREATE_NEW_BRANCH:'BranchMaster/create-branch',
+        UPDATE_BRANCH:'',
+        DELETE_BRANCH:''
     }
 }
 
