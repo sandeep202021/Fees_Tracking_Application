@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { RouterOutlet, Router, RouterLink } from '@angular/router';
+import { RouterOutlet, Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [ RouterOutlet,RouterLink],
+  imports: [ RouterOutlet,RouterLink,RouterLinkActive,CommonModule ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })

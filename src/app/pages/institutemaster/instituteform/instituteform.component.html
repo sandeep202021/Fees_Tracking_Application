@@ -226,14 +226,16 @@
 
           <!-- Buttons -->
           <div class="mt-4 text-end">
+            @if(newInstituMasterForm.value.instituteId==0){
             <button
-              type="submit"
+              type="button"
               class="btn btn-success"
               (click)="savaeInstitute()"
               [disabled]="newInstituMasterForm.invalid"
             >
               Save
-            </button>
+            </button>}@else{
+            <button type="button" class="btn btn-warning" (click)=" UpdateInstitute()">Update</button>}
             <button
               type="button"
               class="btn btn-danger ms-2"

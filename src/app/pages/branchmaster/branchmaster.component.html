@@ -35,21 +35,38 @@
             </thead>
             <tbody id="branchTableBody">
               <!-- sample rows -->
-             @for (item of branchMasterList; track $index) {
+              @for (item of branchMasterList; track $index) {
               <tr>
-                <td>{{item.branchId}}</td>
-                <td>{{item.branchName }}</td>
-                <td>{{item.city}}</td>
-                <td>{{item.state}} </td>
-                <td>{{item.branchContactNo}}</td>
-                <td>{{item.branchEmail}}</td>
+                <td>{{ item.branchId }}</td>
                 <td>
-                  <button class="btn btn-sm btn-outline-secondary me-1">
+                  <a
+                    class="text-primary text-decoration-underline"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    (click)="onGetBranchById(item.branchId)"
+                    >{{ item.branchName }}
+                  </a>
+                </td>
+                <td>{{ item.city }}</td>
+                <td>{{ item.state }}</td>
+                <td>{{ item.branchContactNo }}</td>
+                <td>{{ item.branchEmail }}</td>
+                <td>
+                  <button
+                    class="btn btn-sm btn-outline-secondary me-1"
+                    (click)="onEdit(item)"
+                  >
                     <i class="bi bi-pencil-square"></i>
                   </button>
-                  <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                  <button
+                    class="btn btn-sm btn-outline-danger"
+                    (click)="onDeleteBranch(item.branchId)"
+                  >
+                    <i class="bi bi-trash"></i>
+                  </button>
                 </td>
-              </tr>}
+              </tr>
+              }
               <!-- more rows can go here -->
             </tbody>
           </table>
@@ -74,7 +91,7 @@
           </button>
         </div>
 
-        <form id="branchForm">
+        <form id="branchForm" [formGroup]="newBranchMasterForm">
           <div class="row g-3">
             <div class="col-12">
               <label class="form-label">Branch Name</label>
@@ -82,8 +99,10 @@
                 id="branchName"
                 type="text"
                 class="form-control"
-                placeholder="KIET"
+                formControlName="branchName"
+                placeholder="branch name "
                 required
+                autocomplete="off"
               />
             </div>
 
@@ -93,7 +112,10 @@
                 id="branchCode"
                 type="text"
                 class="form-control"
-                placeholder="K8899T"
+                formControlName="branchCode"
+                placeholder="enter branch code"
+                required
+                autocomplete="off"
               />
             </div>
 
@@ -103,7 +125,12 @@
                 id="branchContactNo"
                 type="tel"
                 class="form-control"
-                placeholder="9988990077"
+                formControlName="branchContactNo"
+                placeholder="enter contact number"
+                autocomplete="off"
+                min="10"
+                max="10"
+                required
               />
             </div>
 
@@ -113,14 +140,22 @@
                 id="branchEmail"
                 type="email"
                 class="form-control"
-                placeholder="contact@kiet.in"
+                formControlName="branchEmail"
+                placeholder="enter email"
+                autocomplete="off"
+                required
               />
             </div>
 
             <!-- City Dropdown -->
             <div class="col-md-6">
               <label class="form-label">City</label>
-              <select id="city" class="form-select" required>
+              <select
+                id="city"
+                class="form-select"
+                formControlName="city"
+                required
+              >
                 <option value="" selected disabled>Select City</option>
                 <option>Ghaziabad</option>
                 <option>Noida</option>
@@ -132,7 +167,12 @@
             <!-- State Dropdown -->
             <div class="col-md-6">
               <label class="form-label">State</label>
-              <select id="state" class="form-select" required>
+              <select
+                id="state"
+                class="form-select"
+                formControlName="state"
+                required
+              >
                 <option value="" selected disabled>Select State</option>
                 <option>Uttar Pradesh</option>
                 <option>Delhi</option>
@@ -142,15 +182,21 @@
             </div>
 
             <!-- Institute ID Dropdown -->
+            @if(loggedUser.role !=='InstituteAdmin'){
             <div class="col-md-6">
               <label class="form-label">Institute</label>
-              <select id="instituteId" class="form-select" required>
-                <option value="" selected disabled>Select Institute</option>
-                 @for (item of instituteMasterList; track $index) {
-                <option [value]="item.instituteId">{{item.name}}</option>
-                }               
-               </select>
-            </div>
+              <select
+                id="instituteId"
+                class="form-select"
+                formControlName="instituteId"
+                required
+              >
+                <option selected disabled>Select Institute</option>
+                @for (item of instituteMasterList; track $index) {
+                <option [value]="item.instituteId">{{ item.name }}</option>
+                }
+              </select>
+            </div>}
 
             <div class="col-md-6">
               <label class="form-label">Pincode</label>
@@ -158,7 +204,10 @@
                 id="pincode"
                 type="text"
                 class="form-control"
-                placeholder="8966"
+                formControlName="pincode"
+                placeholder="enter pincode "
+                required
+                autocomplete="off"
               />
             </div>
 
@@ -168,22 +217,81 @@
                 id="location"
                 type="text"
                 class="form-control"
-                placeholder="West up"
+                formControlName="location"
+                placeholder="Location"
+                required
+                autocomplete="off"
               />
             </div>
           </div>
 
           <div class="d-flex justify-content-end mt-3">
-            <button type="submit" class="btn btn-success me-2">Save</button>
+            @if(newBranchMasterForm.value.branchId==0){
+            <button
+              type="submit"
+              class="btn btn-success me-2"
+              (click)="onCreateBranch()"
+            >
+              Save
+            </button>
+            }@else{
+            <button
+              type="submit"
+              class="btn btn-warning me-2"
+              (click)="onUpdateBranch()"
+            >
+              Update</button
+            >}
             <button
               type="button"
               class="btn btn-outline-secondary"
               id="cancelBtn"
+              (click)="onCancel()"
             >
               Cancel
             </button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal-->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Branch Details</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="card mt-3" style="width: 100%">
+          <div class="card-body">
+            <h5 class="card-title">{{ selectedBranch.branchName }}</h5>
+            <p class="card-text">
+              <strong>Branch ID:</strong> {{ selectedBranch.branchId }}<br>
+              <strong>Branch Code:</strong> {{ selectedBranch.branchCode }}<br>
+              <strong>City:</strong> {{ selectedBranch.city }}<br>
+              <strong>State:</strong> {{ selectedBranch.state }}<br>
+              <strong>Contact:</strong> {{ selectedBranch.branchContactNo }}<br>
+              <strong>Email:</strong> {{ selectedBranch.branchEmail }}<br>
+              <strong>Pincode:</strong> {{ selectedBranch.pincode }}<br>
+              <strong>Location:</strong> {{ selectedBranch.location }}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -26,8 +26,10 @@ export const APIConstant = {
     BRANCH:{
         GET_ALL_BRANCHES:'BranchMaster/get-all-branches',
         CREATE_NEW_BRANCH:'BranchMaster/create-branch',
-        UPDATE_BRANCH:'',
-        DELETE_BRANCH:''
+        UPDATE_BRANCH:'BranchMaster/update-branch',
+        DELETE_BRANCH:'BranchMaster/delete-branch/',
+        GET_BRANCH_BY_ID:'BranchMaster/get-branch-by-id/'
+
     }
 }
 
@@ -36,4 +38,5 @@ export const ToastMessages = {
   UPDATE_SUCCESS: { message: 'Data updated successfully', title: 'Update' },
   DELETE_SUCCESS: { message: 'Data deleted successfully', title: 'Delete' },
   ERROR: { message: 'Something went wrong, please try again.', title: 'Error' },
+  FILTER:{ message:'branch filter successfully', title:'load'}
 };

@@ -66,36 +66,15 @@ export class InstitutemasterComponent implements OnInit {
   }
   
 
-  onEdit(data: instituteModel) {
-    this.newInstituteMasterObj = data;
-    this.newInstituMasterForm.patchValue({
-      instituteId: data.instituteId,
-      name: data.name,
-      conatctNo: data.conatctNo,
-      emailId: data.emailId,
-      city: data.city,
-      pincode: data.pincode,
-      state: data.state,
-      location: data.location,
-      ownerName: data.ownerName,
-      createdDate: data.createdDate,
-      gstNo: data.gstNo,
-    });
+  onEdit(id: number) {
+    this.router.navigate(['instituteForm'], {
+    queryParams: { 
+      instituteId: id
+    }
+  });
   }
 
-  UpdateInstitute() {
-    debugger;
-    const updateformsdata = this.newInstituMasterForm.value;
-    this.InstituremasterServ.updateNewInstituteMaster(updateformsdata.instituteId, updateformsdata).subscribe({
-      next: (result: IApiModel) => {
-        this.toast.showSuccess(ToastMessages.UPDATE_SUCCESS);
-        this.loadInstitute();
-      },
-      error: (error: IApiModel) => {
-        this.toast.showError(ToastMessages.ERROR);
-      },
-    });
-  }
+  
 
   onDeleteInstitute(id: number) {   
     const isDelete = confirm('Are you sure want to Delete');

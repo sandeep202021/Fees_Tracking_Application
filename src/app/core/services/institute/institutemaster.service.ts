@@ -17,6 +17,9 @@ export class InstitutemasterService {
   return this.http.get<IApiModel>(`${environment.API_URL}${APIConstant.INSTITUTE.GET_ALL_INSTITUTE}`); 
   }
 
+  getInstituteMasterById(id:number):Observable<IApiModel>{
+  return this.http.get<IApiModel>(`${environment.API_URL}${APIConstant.INSTITUTE.GET_ALL_FILTER_INSTITUTE_BY_ID}${id}`); 
+  }
   createNewInstituteMaster(obj:instituteModel):Observable<IApiModel>{
   //return this.http.post<IApiModel>(`${environment.API_URL}${APIConstant.INSTITUTE.CREATE_NEW_INSTITUTE}`,obj);
   return this.http.post<IApiModel>("https://feestracking.freeprojectapi.com/api/InstituteMaster/create-institute",obj);

@@ -7,19 +7,19 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" routerLink="dashboard">Home</a>          
+          <a class="nav-link " routerLinkActive="active" routerLink="dashboard">Home</a>          
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="master">Master</a>          
+          <a class="nav-link" routerLinkActive="active" routerLink="master">Master</a>          
         </li>
         <li class="nav-item">
-          <a class="nav-link " routerLink="packagemaster">Package</a>
+          <a class="nav-link " routerLinkActive="active" routerLink="packagemaster">Package</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="institute" >Institute</a>
+          <a class="nav-link" routerLinkActive="active" routerLink="institute" >Institute</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="branch" >Branch</a>
+          <a class="nav-link" routerLinkActive="active" routerLink="branch" >Branch</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -36,11 +36,15 @@
 
   <form class="d-flex ms-auto">
         <ul class="navbar-nav">
-    <li class="nav-item dropdown">
+    <li class="nav-item dropdown">      
       <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-        {{ loggedData }}
+        <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center fw-bold"
+       style="width: 40px; height: 40px;">
+    {{ loggedData?.charAt(0) | uppercase }}
+  </div>
       </a>
       <ul class="dropdown-menu dropdown-menu-end text-center">
+        <li>{{ loggedData }}</li>
         <li><button class="btn btn-danger" (click)="logoff()"> <i class="bi bi-box-arrow-right"></i>  Log Out</button></li>
       </ul>
     </li>
