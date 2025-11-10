@@ -30,6 +30,14 @@ export const APIConstant = {
         DELETE_BRANCH:'BranchMaster/delete-branch/',
         GET_BRANCH_BY_ID:'BranchMaster/get-branch-by-id/'
 
+    },
+    COURSE:{
+        GET_ALL_COURSE:'Course/getAllCourses',
+        CREATE_NEW_COURSE:'',
+        UPDATE_COURSE:'',
+        DELETE_COURSE:'',
+        GET_COURSE_BY_ID:'',
+        GET_COURSE_BY_INSTITUTE_ID:''
     }
 }
 

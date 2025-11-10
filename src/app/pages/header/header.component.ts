@@ -10,6 +10,15 @@ import { RouterOutlet, Router, RouterLink, RouterLinkActive } from '@angular/rou
 })
 export class HeaderComponent {
 
+  navItems = [
+    { label: 'Home', path: 'dashboard' },
+    { label: 'Master', path: 'master' },
+    { label: 'Package', path: 'packagemaster' },
+    { label: 'Institute', path: 'institute' },
+    { label: 'Branch', path: 'branch' },
+    { label: 'Course', path: 'course' },
+  ];
+
   loggedData: any;
   router = inject(Router)
 

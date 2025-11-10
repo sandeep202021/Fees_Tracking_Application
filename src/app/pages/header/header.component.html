@@ -6,31 +6,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link " routerLinkActive="active" routerLink="dashboard">Home</a>          
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="master">Master</a>          
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " routerLinkActive="active" routerLink="packagemaster">Package</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="institute" >Institute</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="branch" >Branch</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown link
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" >Action</a></li>
-            <li><a class="dropdown-item" >Another action</a></li>
-            <li><a class="dropdown-item" >Something else here</a></li>
-          </ul>
-        </li>        
+        <li class="nav-item" *ngFor="let item of navItems">
+          <a class="nav-link" [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          {{ item.label }}
+        </a>
+        </li>             
       </ul>
       
 
@@ -53,6 +33,9 @@
     </div>
   </div>
 </nav>
+
+
+
 
 
 <router-outlet></router-outlet>
