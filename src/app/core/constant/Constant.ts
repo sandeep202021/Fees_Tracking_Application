@@ -33,11 +33,11 @@ export const APIConstant = {
     },
     COURSE:{
         GET_ALL_COURSE:'Course/getAllCourses',
-        CREATE_NEW_COURSE:'',
-        UPDATE_COURSE:'',
-        DELETE_COURSE:'',
-        GET_COURSE_BY_ID:'',
-        GET_COURSE_BY_INSTITUTE_ID:''
+        CREATE_NEW_COURSE:'Course/createCourse',
+        UPDATE_COURSE:'Course/updateCourse',
+        DELETE_COURSE:'Course/deleteCourse/',
+        GET_COURSE_BY_ID:'Course/getCourseById/',
+        GET_COURSE_BY_INSTITUTE_ID:'Course/getCoursesByInstitute/'
     }
 }
 

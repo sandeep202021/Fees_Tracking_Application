@@ -1,0 +1,159 @@
+<div class="container-fluid mt-4">
+  <div class="row">
+    <!-- Left Section -->
+    <div class="col-lg-12">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold">Course</h3>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          data-bs-toggle="modal"
+          data-bs-target="#courseModal"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="32"
+            width="28"
+            viewBox="0 0 448 512"
+          >
+            <!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+            <path
+              fill="#000000"
+              d="M256 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 160-160 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l160 0 0 160c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160 160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-160 0 0-160z"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!--table start -->
+      <div class="container-fluid mt-3">
+  <div class="row g-2">
+      @for(item of courseList ; track $index){
+        <div class="col-md-3 col-sm-6">
+      <div class="card ourse-card ">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+          <h6 class="mb-0">{{item.courseName}}</h6>
+          <span class="badge bg-success badge-status">{{item.isActive ? 'Active' : 'Not Active' }}</span>
+        </div>
+
+        <p class="price mb-1">{{item.courseCost | currency }}</p>
+        <small class="text-muted">Duration: {{item.duration}}</small>
+
+        <p class="course-desc mt-2 mb-2">{{item.courseDescription}}</p>
+
+        <div class="d-flex justify-content-between align-items-center">
+          <small class="text-muted">
+            <i class="bi bi-calendar-event"></i>
+            <span id="createdDate"></span>
+          </small>
+          <button class="btn btn-sm btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#courseModal" (click)="onEdit(item)">
+            <i class="bi bi-info-circle"></i> edit
+          </button>
+          <button class="btn btn-sm btn-outline-danger" (click)="onDelete(item.courseId)">
+            <i class="bi bi-info-circle"></i> Delete
+          </button>
+        </div>
+      </div>
+      </div>
+    </div>}
+    </div>
+    </div>
+      <!--table end-->      
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<!-- Course Modal -->
+<div
+  class="modal fade"
+  id="courseModal"
+  tabindex="-1"
+  aria-labelledby="courseModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content shadow-lg border-0 rounded-4">
+
+      <!-- Header -->
+      <div class="modal-header bg-success text-white rounded-top-4">
+        <h5 class="modal-title fw-semibold" id="courseModalLabel">
+          <i class="bi bi-book me-2"></i> Add New Course
+        </h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body bg-light">
+
+        <form id="courseForm" class="px-2" [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+
+          <div class="row g-3">
+            <!-- Course Name -->
+            <div class="col-md-6">
+              <label for="courseName" class="form-label fw-semibold">Course Name</label>
+              <input type="text" class="form-control form-control-lg" formControlName="courseName" id="courseName" placeholder="Enter course name" required>
+            </div>
+
+            <!-- Course Cost -->
+            <div class="col-md-6">
+              <label for="courseCost" class="form-label fw-semibold">Course Cost</label>
+              <input type="number" class="form-control form-control-lg" formControlName="courseCost" id="courseCost" placeholder="Enter course cost" required>
+            </div>
+
+            <!-- Duration -->
+            <div class="col-md-6">
+              <label for="duration" class="form-label fw-semibold">Duration</label>
+              <input type="text" class="form-control form-control-lg" formControlName="duration" id="duration" placeholder="e.g., 12 months" required>
+            </div>
+
+            <!-- Institute Dropdown -->
+            <div class="col-md-6">
+              <label for="instituteId" class="form-label fw-semibold">Select Institute</label>
+              <select class="form-select form-select-lg" formControlName="instituteId" id="instituteId" required>
+                <option value="">-- Select Institute --</option>
+                 @for (item of instituteMasterList; track $index) {
+                <option [value]="item.instituteId">{{ item.name }}</option>
+                }
+              </select>
+            </div>
+
+            <!-- Course Description -->
+            <div class="col-12">
+              <label for="courseDescription" class="form-label fw-semibold">Course Description</label>
+              <textarea class="form-control form-control-lg" formControlName="courseDescription" id="courseDescription" rows="3" placeholder="Enter course description" required></textarea>
+            </div>
+
+            <!-- Is Active -->
+            <div class="col-12">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" formControlName="isActive" id="isActive" checked>
+                <label class="form-check-label fw-semibold" for="isActive">Is Active</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Buttons -->
+          <div class="text-end mt-4">
+            <button type="reset" class="btn btn-outline-warning btn-lg me-2" (click)="onCancel()">
+              <i class="bi bi-x-circle me-1"></i> Cancel
+            </button>
+            <button type="submit" class="btn btn-success btn-lg">
+              <i class="bi bi-save2 me-1"></i> Save
+            </button>
+            <button type="button" class="btn btn-warning btn-lg" (click)="onUpdate()">
+              <i class="bi bi-save2 me-1"></i> Update
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

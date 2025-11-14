@@ -1,0 +1,90 @@
+/* Compact Card Styling */
+.compact-card {
+  max-width: 280px;
+  min-height: auto;
+  transition: all 0.2s ease;
+}
+
+.compact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+}
+
+/* Compact student info items */
+.student-info-item.compact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-wrapper.compact {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.info-content.compact {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Compact financial cards */
+.financial-card.compact {
+  transition: all 0.2s ease;
+  background: #f8f9fa;
+  min-height: 45px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.financial-card.compact:hover {
+  background-color: #fff;
+  transform: scale(1.03);
+}
+
+/* Text sizes */
+.small {
+  font-size: 0.8rem;
+}
+
+.x-small {
+  font-size: 0.7rem;
+}
+
+/* Button sizing */
+.btn-xs {
+  padding: 0.1rem 0.3rem;
+  font-size: 0.7rem;
+}
+
+/* Badge sizing */
+.badge.small {
+  font-size: 0.65rem;
+  padding: 0.2rem 0.4rem;
+}
+
+/* Gradient background */
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .compact-card {
+    max-width: 100%;
+  }
+  
+  .student-info-item.compact {
+    gap: 6px;
+  }
+  
+  .icon-wrapper.compact {
+    width: 28px;
+    height: 28px;
+  }
+}

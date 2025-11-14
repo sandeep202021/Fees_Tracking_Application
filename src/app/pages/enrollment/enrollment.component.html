@@ -1,0 +1,675 @@
+<div class="container-fluid mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="fw-bold m-0">Enrollment</h3>
+    <button
+      class="btn btn-outline-success"
+      data-bs-toggle="modal"
+      data-bs-target="#enrollmentModal"
+      aria-label="Add Enrollment"
+    >
+      <i class="bi bi-plus-lg" style="font-size: 1.2rem"></i> Add
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="enrollmentModal"
+    tabindex="-1"
+    aria-labelledby="enrollmentModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content rounded-4 shadow-sm">
+        <!-- header -->
+        <div class="modal-header bg-success text-white rounded-top-4">
+          <h5 class="modal-title fw-semibold" id="enrollmentModalLabel">
+            <i class="bi bi-person-lines-fill me-2"></i> New Enrollment
+          </h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        <!-- body -->
+        <div class="modal-body">
+          <form
+            id="enrollmentForm"
+            class="row g-3 needs-validation"
+            [formGroup]="enrollmentForm"
+            (ngSubmit)="onSubmit()"
+            novalidate
+          >
+            <!-- SECTION 1: Enrollment + Payment -->
+            <div class="col-12">
+              <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                  <h6 class="fw-semibold mb-3">Enrollment & Payment</h6>
+                  <div class="row g-3">
+                    <div class="col-md-4">
+                      <label for="courseId" class="form-label small fw-semibold"
+                        >Course <span class="text-danger">*</span></label
+                      >
+                      <select
+                        id="courseId"
+                        class="form-select"
+                        formControlName="courseId"
+                        required
+                      >
+                        <option value="">-- Select Course --</option>
+                        @for(item of courseList; track $index ){
+                        <option [value]="item.courseId">
+                          {{ item.courseName }}
+                        </option>
+                        }
+                      </select>
+                      <div class="invalid-feedback">
+                        Please select a course.
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <label
+                        for="instituteId"
+                        class="form-label small fw-semibold"
+                        >Institute <span class="text-danger">*</span></label
+                      >
+                      <select
+                        id="instituteId"
+                        class="form-select"
+                        formControlName="instituteId"
+                        required
+                      >
+                        <option value="">-- Select Institute --</option>
+                        @for(item of instituteMasterList; track $index ){
+                        <option [value]="item.instituteId">
+                          {{ item.name }}
+                        </option>
+                        }
+                      </select>
+                      <div class="invalid-feedback">
+                        Please select an institute.
+                      </div>
+                    </div>
+
+                    <!-- Change this line in your HTML -->
+                    <div class="col-md-4">
+                      <label
+                        for="refrenceById"
+                        class="form-label small fw-semibold"
+                        >Reference By</label
+                      >
+                      <select
+                        id="refrenceById"
+                        class="form-select"
+                        formControlName="refrenceById"
+                      >
+                        <!-- Fixed: formControlName -->
+                        <option value="">-- Select Reference --</option>
+                        @for(item of masterList; track $index ){
+                        <option [value]="item.masterId">
+                          {{ item.masterValue }}
+                        </option>
+                        }
+                      </select>
+                    </div>
+
+                    <div class="col-md-4">
+                      <label
+                        for="enrollmentDate"
+                        class="form-label small fw-semibold"
+                        >Enrollment Date
+                        <span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="date"
+                        id="enrollmentDate"
+                        class="form-control"
+                        formControlName="enrollmentDate"
+                        required
+                      />
+                      <div class="invalid-feedback">
+                        Please provide enrollment date.
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <label
+                        for="finalAmount"
+                        class="form-label small fw-semibold"
+                        >Final Amount</label
+                      >
+                      <div class="input-group">
+                        <span class="input-group-text">₹</span>
+                        <input
+                          type="number"
+                          id="finalAmount"
+                          class="form-control"
+                          formControlName="finalAmount"
+                          placeholder="0"
+                          min="0"
+                          step="0.01"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <label
+                        for="discountGiven"
+                        class="form-label small fw-semibold"
+                        >Discount Given</label
+                      >
+                      <div class="input-group">
+                        <span class="input-group-text">₹</span>
+                        <input
+                          type="number"
+                          id="discountGiven"
+                          class="form-control"
+                          formControlName="discountGiven"
+                          placeholder="0"
+                          min="0"
+                          step="0.01"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                      <label
+                        for="discountApprovedByUserId"
+                        class="form-label small fw-semibold"
+                        >Discount Approved By (User ID)</label
+                      >
+                      <input
+                        type="text"
+                        id="discountApprovedByUserId"
+                        class="form-control"
+                        formControlName="discountApprovedByUserId"
+                        placeholder="User ID"
+                      />
+                    </div>
+
+                    <div class="col-md-6 col-lg-4 d-flex align-items-center">
+                      <div class="form-check form-switch mt-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          formControlName="isFeesCompleted"
+                          id="isFeesCompleted"
+                          checked
+                        />
+                        <label
+                          class="form-check-label fw-semibold"
+                          for="isFeesCompleted"
+                          >Fees Completed</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 2: Student Basic -->
+            <div class="col-12">
+              <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                  <h6 class="fw-semibold mb-3">Student Information</h6>
+                  <div class="row g-3">
+                    <div class="col-md-6 col-lg-4">
+                      <label for="name" class="form-label small fw-semibold"
+                        >Full Name <span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="text"
+                        id="name"
+                        class="form-control"
+                        formControlName="name"
+                        placeholder="Enter full name"
+                        required
+                      />
+                      <div class="invalid-feedback">Name is required.</div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                      <label
+                        for="contactNo"
+                        class="form-label small fw-semibold"
+                        >Contact No <span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="tel"
+                        id="contactNo"
+                        class="form-control"
+                        formControlName="contactNo"
+                        placeholder="e.g. 9876543210"
+                        pattern="[0-9]{7,15}"
+                        required
+                      />
+                      <div class="invalid-feedback">
+                        Enter a valid contact number.
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                      <label for="email" class="form-label small fw-semibold"
+                        >Email</label
+                      >
+                      <input
+                        type="email"
+                        id="email"
+                        class="form-control"
+                        formControlName="email"
+                        placeholder="Enter email"
+                      />
+                      <div class="invalid-feedback">Enter a valid email.</div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                      <label for="city" class="form-label small fw-semibold"
+                        >City</label
+                      >
+                      <input
+                        type="text"
+                        id="city"
+                        class="form-control"
+                        formControlName="city"
+                        placeholder="City"
+                      />
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                      <label for="state" class="form-label small fw-semibold"
+                        >State</label
+                      >
+                      <input
+                        type="text"
+                        id="state"
+                        class="form-control"
+                        formControlName="state"
+                        placeholder="State"
+                      />
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                      <label for="pincode" class="form-label small fw-semibold"
+                        >Pincode</label
+                      >
+                      <input
+                        type="text"
+                        id="pincode"
+                        class="form-control"
+                        formControlName="pincode"
+                        placeholder="Pincode"
+                      />
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                      <label
+                        for="qualification"
+                        class="form-label small fw-semibold"
+                        >Qualification</label
+                      >
+                      <input
+                        type="text"
+                        id="qualification"
+                        class="form-control"
+                        formControlName="qualification"
+                        placeholder="Qualification"
+                      />
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                      <label
+                        for="collegeName"
+                        class="form-label small fw-semibold"
+                        >College Name</label
+                      >
+                      <input
+                        type="text"
+                        id="collegeName"
+                        class="form-control"
+                        formControlName="collegeName"
+                        placeholder="College name"
+                      />
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                      <label
+                        for="collegeCity"
+                        class="form-label small fw-semibold"
+                        >College City</label
+                      >
+                      <input
+                        type="text"
+                        id="collegeCity"
+                        class="form-control"
+                        formControlName="collegeCity"
+                        placeholder="College city"
+                      />
+                    </div>
+
+                    <div class="col-md-12 col-lg-4">
+                      <label
+                        for="familyDetails"
+                        class="form-label small fw-semibold"
+                        >Family Details</label
+                      >
+                      <input
+                        type="text"
+                        id="familyDetails"
+                        class="form-control"
+                        formControlName="familyDetails"
+                        placeholder="Short note (eg. guardian & contact)"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 3: Documents -->
+            <div class="col-12">
+              <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                  <h6 class="fw-semibold mb-3">Documents & Photo</h6>
+                  <div class="row g-3 align-items-center">
+                    <div class="col-md-4 col-lg-3">
+                      <label
+                        for="aadharCard"
+                        class="form-label small fw-semibold"
+                        >Aadhar Card</label
+                      >
+                      <input
+                        type="text"
+                        id="aadharCard"
+                        class="form-control"
+                        formControlName="aadharCard"
+                        placeholder="Aadhar number"
+                      />
+                    </div>
+
+                    <div class="col-md-4 col-lg-3">
+                      <label
+                        for="profilePhotoName"
+                        class="form-label small fw-semibold"
+                        >Profile Photo</label
+                      >
+                      <input
+                        type="file"
+                        id="profilePhotoName"
+                        class="form-control"
+                        formControlName="profilePhotoName"
+                        accept="image/*"
+                      />
+                      <div class="form-text small">Max 2MB. JPG/PNG</div>
+                    </div>
+
+                    <div class="col-md-4 col-lg-3">
+                      <label class="form-label small fw-semibold d-block"
+                        >Preview</label
+                      >
+                      <div
+                        class="border rounded p-2 d-inline-block"
+                        style="width: 120px; height: 120px"
+                      >
+                        <img
+                          id="profilePreview"
+                          src=""
+                          alt="preview"
+                          class="img-fluid h-100 w-100 object-fit-cover rounded"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 col-lg-3">
+                      <label class="form-label small fw-semibold">Notes</label>
+                      <textarea
+                        id="notes"
+                        class="form-control"
+                        rows="2"
+                        placeholder="Any additional notes"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- form actions -->
+            <div class="col-12 text-end">
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn-lg me-2"
+                id="resetBtn"
+                (click)="onCancel()"
+              >
+                <i class="bi bi-x-circle me-1"></i> Reset
+              </button>
+              <button type="submit" class="btn btn-success btn-lg">
+                <i class="bi bi-save2 me-1"></i> Save Enrollment
+              </button>
+            </div>
+          </form>
+        </div>
+        <!-- modal-body -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--html-->
+<div class="container-fluid mt-4">
+  <!-- Compact Institute Info Card -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body py-3">
+          <div class="row g-3">
+            <!-- Institute Name -->
+            <div class="col-sm-6 col-md-3">
+              <div class="d-flex align-items-center">
+                <div class="bg-primary bg-opacity-10 rounded p-2 me-2">
+                  <i class="bi bi-building text-primary fs-6"></i>
+                </div>
+                <div>
+                  <small class="text-muted d-block">Institute</small>
+                  <strong class="text-dark">{{ getCurrentInstituteInfo() }}</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Institute ID -->
+            <div class="col-sm-6 col-md-2">
+              <div class="d-flex align-items-center">
+                <div class="bg-secondary bg-opacity-10 rounded p-2 me-2">
+                  <i class="bi bi-hash text-secondary fs-6"></i>
+                </div>
+                <div>
+                  <small class="text-muted d-block">Institute ID</small>
+                  <strong class="text-dark">{{ currentInstituteId }}</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- User Info -->
+            <div class="col-sm-6 col-md-3">
+              <div class="d-flex align-items-center">
+                <div class="bg-success bg-opacity-10 rounded p-2 me-2">
+                  <i class="bi bi-person text-success fs-6"></i>
+                </div>
+                <div>
+                  <small class="text-muted d-block">Logged in as</small>
+                  <strong class="text-dark">{{ currentUserName }}</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- User Role -->
+            <div class="col-sm-6 col-md-2">
+              <div class="d-flex align-items-center">
+                <div class="bg-warning bg-opacity-10 rounded p-2 me-2">
+                  <i class="bi bi-shield-check text-warning fs-6"></i>
+                </div>
+                <div>
+                  <small class="text-muted d-block">Role</small>
+                  <span class="badge bg-warning text-dark">{{ getUserRoleFromUser() }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Total Enrollments -->
+            <div class="col-sm-6 col-md-2">
+              <div class="d-flex align-items-center">
+                <div class="bg-info bg-opacity-10 rounded p-2 me-2">
+                  <i class="bi bi-people text-info fs-6"></i>
+                </div>
+                <div>
+                  <small class="text-muted d-block">Enrollments</small>
+                  <strong class="text-info">{{ enrollmentList.length }}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Your existing enrollment list content continues here -->
+
+ <!-- Compact Student Enrollment Card -->
+ <div class="row g-3">
+ @for(item of enrollmentList; track $index){
+
+<div class="col-12 col-md-6 col-lg-4 col-xl-3">
+  <div class="card student-enrollment-card compact-card shadow-sm border-0">
+    
+    <!-- Card Header - Compact -->
+    <div class="card-header bg-gradient-primary text-white py-2 px-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <h6 class="fw-bold mb-0 text-truncate small">
+          <i class="bi bi-person-badge me-1"></i>
+         {{item?.name || 'No Name'}} 
+        </h6>
+        <span class="badge bg-light text-primary small">
+          {{$index + 1}}
+        </span>
+      </div>
+    </div>
+
+    <!-- Card Body - Compact -->
+    <div class="card-body p-3">
+      
+      <!-- Contact Information -->
+      <div class="student-info-item compact mb-2">
+        <div class="icon-wrapper compact bg-primary bg-opacity-10">
+          <i class="bi bi-telephone text-primary small"></i>
+        </div>
+        <div class="info-content compact">
+          <small class="text-muted x-small">Contact</small>
+          <strong class="small">{{item.contactNo}}</strong>
+        </div>
+      </div>
+
+      <!-- Course Information -->
+      <div class="student-info-item compact mb-2">
+        <div class="icon-wrapper compact bg-success bg-opacity-10">
+          <i class="bi bi-book text-success small"></i>
+        </div>
+        <div class="info-content compact">
+          <small class="text-muted x-small">Course</small>
+          <strong class="small text-truncate d-block">{{getCourseName(item.courseId)}}</strong>
+        </div>
+      </div>
+
+      <!-- Financial Information - Compact -->
+      <div class="row g-1 mb-2">
+        <div class="col-6">
+          <div class="financial-card compact text-center p-1 border rounded">
+            <small class="text-muted x-small">Cost</small>
+            <strong class="text-success small">{{item.finalAmount}}</strong>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="financial-card compact text-center p-1 border rounded">
+            <small class="text-muted x-small">Discount</small>
+            <strong class="text-primary small">{{item.discountGiven}}</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Discount & Date - Inline -->
+      <div class="row g-1 mb-2">
+        <div class="col-6">
+          <div class="d-flex align-items-center">
+            <i class="bi bi-percent text-warning small me-1"></i>
+            <div>
+              <small class="text-muted x-small">Discount</small>
+              <div class="text-warning small">₹500</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="d-flex align-items-center">
+            <i class="bi bi-calendar text-info small me-1"></i>
+            <div>
+              <small class="text-muted x-small">Date</small>
+              <div class="small">Nov 10</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- User IDs - Minimal -->
+      <div class="row g-1 mb-2">
+        <div class="col-12">
+          <div class="d-flex justify-content-between">
+            <small class="text-muted x-small">
+              <i class="bi bi-person me-1"></i>By: #10
+            </small>
+            <small class="text-muted x-small">
+              <i class="bi bi-check-circle me-1"></i>App: #10
+            </small>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Card Footer - Compact -->
+    <div class="card-footer bg-light py-1 px-2">
+      <div class="d-flex justify-content-between align-items-center">
+        <span class="badge bg-success small">
+          <i class="bi bi-check-circle me-1"></i>
+          Confirmed
+        </span>
+        <div class="btn-group btn-group-sm">
+          <button class="btn btn-outline-primary btn-xs p-1" title="View Details">
+            <i class="bi bi-eye"></i>
+          </button>
+          <button class="btn btn-outline-secondary btn-xs p-1" title="Edit">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="btn btn-outline-danger btn-xs p-1" title="delete" type="button"(click)="onDelete(item.enrollmentId)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>}
+</div>
+ 
+
+
+
+
+
+
+

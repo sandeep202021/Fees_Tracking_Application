@@ -10,6 +10,7 @@ import { ErrorpageComponent } from './pages/errorpage/errorpage.component';
 import { InstituteformComponent } from './pages/institutemaster/instituteform/instituteform.component';
 import { BranchmasterComponent } from './pages/branchmaster/branchmaster.component';
 import { CourseComponent } from './pages/course/course.component';
+import { EnrollmentComponent } from './pages/enrollment/enrollment.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -26,6 +27,7 @@ export const routes: Routes = [
          {path:'instituteForm',component:InstituteformComponent},
          {path:'branch',component:BranchmasterComponent},
          {path:'course',component:CourseComponent},
+         {path:'enrollment',component:EnrollmentComponent},
          {path:'**',component:ErrorpageComponent}
          
         ]

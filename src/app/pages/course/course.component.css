@@ -1,0 +1,151 @@
+ .package-card {
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            border: none;
+        }
+        
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: none;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .price-section {
+            background-color: var(--light-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .one-time-cost {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+        
+        .emi-cost {
+            font-size: 1.1rem;
+            color: var(--dark-color);
+        }
+        
+        .features-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .features-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-icon {
+            color: var(--secondary-color);
+            margin-right: 0.5rem;
+            width: 20px;
+        }
+        
+        .btn-custom {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-custom:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 30px;
+            transform: rotate(45deg);
+            font-weight: 600;
+            font-size: 0.8rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-popular {
+            border: 2px solid var(--secondary-color);
+        }
+        
+        .card-popular .card-header {
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 700;
+        }
+        
+        .card-title {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .feature-label {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+
+
+         .course-card {
+             background: rgba(255, 182, 193, 0.15);
+      max-width: 320px;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+    }
+    .course-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+    .course-card .card-body {
+      padding: 1rem 1.2rem;
+    }
+    .course-card h6 {
+      font-weight: 600;
+      margin-bottom: .3rem;
+    }
+    .badge-status {
+      font-size: 0.7rem;
+      padding: .3rem .5rem;
+    }
+    .price {
+      font-weight: 700;
+      color: #0d6efd;
+    }
+    .course-desc {
+      font-size: 0.85rem;
+      color: #6c757d;
+      margin-top: .3rem;
+    }

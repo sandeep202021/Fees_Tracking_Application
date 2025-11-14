@@ -17,6 +17,7 @@ export class HeaderComponent {
     { label: 'Institute', path: 'institute' },
     { label: 'Branch', path: 'branch' },
     { label: 'Course', path: 'course' },
+    { label: 'Enrollment', path: 'enrollment' },
   ];
 
   loggedData: any;
