@@ -11,6 +11,8 @@ import { InstituteformComponent } from './pages/institutemaster/instituteform/in
 import { BranchmasterComponent } from './pages/branchmaster/branchmaster.component';
 import { CourseComponent } from './pages/course/course.component';
 import { EnrollmentComponent } from './pages/enrollment/enrollment.component';
+import { PaymentComponent } from './pages/payment/payment.component';
+import { StudentComponent } from './pages/student/student.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -28,6 +30,8 @@ export const routes: Routes = [
          {path:'branch',component:BranchmasterComponent},
          {path:'course',component:CourseComponent},
          {path:'enrollment',component:EnrollmentComponent},
+         {path:'payment',component:PaymentComponent},
+         {path:'student',component:StudentComponent},
          {path:'**',component:ErrorpageComponent}
          
         ]

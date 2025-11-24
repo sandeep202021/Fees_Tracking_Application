@@ -13,6 +13,7 @@ import { ToastMessages } from '../../core/constant/Constant';
 import { ToastService } from '../../core/services/message/toast.service';
 import { CommonModule, JsonPipe, TitleCasePipe } from '@angular/common';
 import { EnrollmentResponse } from '../../core/model/interfaces/enrollment-response.interface';
+import { EnrollmentEditModal } from '../../core/model/classes/enrollmentEdit';
 
 @Component({
   selector: 'app-enrollment',
@@ -326,6 +327,14 @@ export class EnrollmentComponent implements OnInit {
         this.masterList = result.data;
       }
     });
+  }
+
+  onEdit(item:enrollmentModel){
+
+  }
+
+  onUpdate(){
+
   }
 
   onSubmit() {

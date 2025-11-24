@@ -71,29 +71,47 @@
                       </div>
                     </div>
 
-                    <div class="col-md-4">
-                      <label
-                        for="instituteId"
-                        class="form-label small fw-semibold"
-                        >Institute <span class="text-danger">*</span></label
-                      >
-                      <select
-                        id="instituteId"
-                        class="form-select"
-                        formControlName="instituteId"
-                        required
-                      >
-                        <option value="">-- Select Institute --</option>
-                        @for(item of instituteMasterList; track $index ){
-                        <option [value]="item.instituteId">
-                          {{ item.name }}
-                        </option>
-                        }
-                      </select>
-                      <div class="invalid-feedback">
-                        Please select an institute.
-                      </div>
-                    </div>
+                   <!-- Institute Selection - Conditional based on user role -->
+<div class="col-md-4">
+  <label for="instituteId" class="form-label small fw-semibold">
+    Institute <span class="text-danger">*</span>
+  </label>
+  
+  @if (getUserRoleFromUser() === 'SuperAdmin') {
+    <!-- Super Admin sees dropdown -->
+    <select
+      id="instituteId"
+      class="form-select"
+      formControlName="instituteId"
+      required
+    >
+      <option value="">-- Select Institute --</option>
+      @for(item of instituteMasterList; track $index){
+        <option [value]="item.instituteId">
+          {{ item.name }}
+        </option>
+      }
+    </select>
+  } @else {
+    <!-- Institute Admin sees readonly field -->
+    <input
+      type="text"
+      id="instituteIdDisplay"
+      class="form-control"
+      [value]="getCurrentInstituteInfo()"
+      readonly
+      disabled
+    >
+    <input
+      type="hidden"
+      formControlName="instituteId"
+    >
+  }
+  
+  <div class="invalid-feedback">
+    Please select an institute.
+  </div>
+</div>
 
                     <!-- Change this line in your HTML -->
                     <div class="col-md-4">
@@ -652,10 +670,11 @@
           <button class="btn btn-outline-primary btn-xs p-1" title="View Details">
             <i class="bi bi-eye"></i>
           </button>
-          <button class="btn btn-outline-secondary btn-xs p-1" title="Edit">
+          <button class="btn btn-outline-secondary btn-xs p-1" title="Edit" data-bs-toggle="modal" 
+           data-bs-target="#updateModal" type="button" (click)="onEdit(item)">
             <i class="bi bi-pencil"></i>
           </button>
-          <button class="btn btn-outline-danger btn-xs p-1" title="delete" type="button"(click)="onDelete(item.enrollmentId)">
+          <button class="btn btn-outline-danger btn-xs p-1" title="delete" type="button" (click)="onDelete(item.enrollmentId)">
             <i class="bi bi-trash"></i>
           </button>
         </div>
@@ -666,6 +685,78 @@
 </div>}
 </div>
  
+<!-- Enrollment Modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form [formGroup]="enrollmentForm" (ngSubmit)="onUpdate()" class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Enrollment Form</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body row g-3">
+
+        <div class="col-md-6">
+          <label class="form-label">Enrollment ID</label>
+          <input class="form-control" formControlName="enrollmentId" type="number">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Student ID</label>
+          <input class="form-control" formControlName="studentId" type="number">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Course ID</label>
+          <input class="form-control" formControlName="courseId" type="number">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Enrollment Done By</label>
+          <input class="form-control" formControlName="enrollmentDoneByUserId" type="number">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Enrollment Date</label>
+          <input class="form-control" formControlName="enrollmentDate" type="date">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Final Amount</label>
+          <input class="form-control" formControlName="finalAmount" type="number">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Discount Given</label>
+          <input class="form-control" formControlName="discountGiven" type="number">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Discount Approved By</label>
+          <input class="form-control" formControlName="discountApprovedByUserId" type="number">
+        </div>
+
+        <div class="col-md-6 form-check mt-3">
+          <input class="form-check-input" formControlName="isFeesCompleted" type="checkbox">
+          <label class="form-check-label">Is Fees Completed?</label>
+        </div>
+
+        <div class="col-md-6 form-check mt-3">
+          <input class="form-check-input" formControlName="isConfirmed" type="checkbox">
+          <label class="form-check-label">Is Confirmed?</label>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="enrollmentForm.invalid">Save</button>
+      </div>
+
+    </form>
+  </div>
+</div>
 
 
 
